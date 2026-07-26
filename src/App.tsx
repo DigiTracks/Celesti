@@ -15,6 +15,8 @@ const Analytics = lazy(() => import('./modules/analytics/AnalyticsPage'))
 const Architecture = lazy(() => import('./modules/architecture/ArchitecturePage'))
 const Inventory = lazy(() => import('./modules/inventory/InventoryPage'))
 const Procedures = lazy(() => import('./modules/procedures/ProceduresPage'))
+const Genealogy = lazy(() => import('./modules/genealogy/GenealogyPage'))
+const DigiTracks = lazy(() => import('./modules/digiTracks/DigiTracksPage'))
 
 const App: React.FC = () => {
   const [phase, setPhase] = useState<'password' | 'splash' | 'app'>('password')
@@ -41,6 +43,8 @@ const App: React.FC = () => {
           <Route path="/architecture" element={<Architecture />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/procedures" element={<Procedures />} />
+          <Route path="/genealogy" element={<Genealogy />} />
+          <Route path="/digi-tracks" element={<DigiTracks />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>

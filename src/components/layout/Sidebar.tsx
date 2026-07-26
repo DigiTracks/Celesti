@@ -13,12 +13,15 @@ import {
   BookText,
   ChevronLeft,
   X,
+  GitBranch,
+  Building2,
 } from 'lucide-react'
 import { useAppStore } from '@/stores/useAppStore'
 import Logo from '@/components/common/Logo'
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Executive Vision', end: true },
+  { to: '/digi-tracks', icon: Building2, label: 'Digi Tracks' },
   { to: '/executive', icon: Globe, label: 'Mission Control' },
   { to: '/shop-floor', icon: Factory, label: 'Shop Floor' },
   { to: '/quality', icon: ClipboardCheck, label: 'Quality Center' },
@@ -28,6 +31,7 @@ const navItems = [
   { to: '/analytics', icon: BarChart3, label: 'Analytics' },
   { to: '/architecture', icon: Network, label: 'Architecture' },
   { to: '/procedures', icon: BookText, label: 'Procedures & KB' },
+  { to: '/genealogy', icon: GitBranch, label: 'Traceability' },
 ]
 
 interface SidebarInnerProps {
