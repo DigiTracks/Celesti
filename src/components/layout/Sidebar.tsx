@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, useNavigate, useLocation } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard,
@@ -17,15 +17,6 @@ import {
   Building2,
 } from 'lucide-react'
 import { useAppStore } from '@/stores/useAppStore'
-
-const roleLanding: Record<string, string> = {
-  CEO: '/',
-  MFG_ENGINEER: '/digital-thread',
-  QUALITY_INSPECTOR: '/quality',
-  TECHNICIAN: '/shop-floor',
-  SUPPLIER: '/supply-chain',
-  AUDITOR: '/executive',
-}
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Executive Vision', end: true },
@@ -48,10 +39,8 @@ interface SidebarInnerProps {
 }
 
 const SidebarInner: React.FC<SidebarInnerProps> = ({ sidebarOpen, onNavClick, showClose }) => {
-  const { toggleSidebar, setSidebarOpen, activePersona } = useAppStore()
+  const { toggleSidebar, setSidebarOpen } = useAppStore()
   const navigate = useNavigate()
-  const filteredNav = navItems.filter((item) => activePersona.accessibleRoutes.includes(item.to))
-  const navToShow = filteredNav.length > 0 ? filteredNav : navItems
 
   return (
     <div className="h-full bg-bg-surface border-r border-border-subtle flex flex-col overflow-hidden">
@@ -135,7 +124,7 @@ const SidebarInner: React.FC<SidebarInnerProps> = ({ sidebarOpen, onNavClick, sh
       </div>
 
       <nav className="flex-1 py-3 space-y-0.5 overflow-y-auto">
-        {navToShow.map((item) => (
+        {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
@@ -204,17 +193,7 @@ const SidebarInner: React.FC<SidebarInnerProps> = ({ sidebarOpen, onNavClick, sh
 }
 
 const Sidebar: React.FC = () => {
-  const { sidebarOpen, activePersona } = useAppStore()
-  const location = useLocation()
-  const navigate = useNavigate()
-  const currentBlocked =
-    !activePersona.accessibleRoutes.includes(location.pathname) && location.pathname !== '/'
-
-  React.useEffect(() => {
-    if (currentBlocked) {
-      navigate(roleLanding[activePersona.role] || '/', { replace: true })
-    }
-  }, [currentBlocked, activePersona.role, navigate])
+  const { sidebarOpen } = useAppStore()
 
   return (
     <>

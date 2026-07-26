@@ -1,5 +1,5 @@
-import React, { Suspense, lazy, useState, useEffect } from 'react'
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import React, { Suspense, lazy, useState } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import SplashScreen from './components/common/SplashScreen'
 import PasswordGate from './components/common/PasswordGate'
@@ -20,13 +20,6 @@ const DigiTracks = lazy(() => import('./modules/digiTracks/DigiTracksPage'))
 
 const App: React.FC = () => {
   const [phase, setPhase] = useState<'password' | 'splash' | 'app'>('password')
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (phase === 'app') {
-      navigate('/', { replace: true })
-    }
-  }, [phase, navigate])
 
   if (phase === 'password') {
     return <PasswordGate onUnlock={() => setPhase('splash')} />
