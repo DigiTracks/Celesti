@@ -4,7 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'production' ? '/celesti/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/Celesti/' : '/',
   server: { port: 8888 },
   resolve: {
     alias: {
