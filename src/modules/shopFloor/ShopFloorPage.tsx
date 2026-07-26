@@ -21,20 +21,70 @@ const statusMap: Record<string, StatusBadgeProps['variant']> = {
 }
 
 const woColumns = [
-  { key: 'woNumber', header: 'WO #', sortable: true, render: (r: WorkOrder) => <span className="font-mono text-xs text-blue-400">{r.woNumber}</span> },
-  { key: 'assignedOperator', header: 'Operator', sortable: true, render: (r: WorkOrder) => <span className="text-xs text-text-muted">{r.assignedOperator}</span> },
-  { key: 'quantity', header: 'Qty', sortable: true, render: (r: WorkOrder) => <span className="font-mono text-xs">{r.quantityCompleted}/{r.quantity}</span> },
-  { key: 'priority', header: 'Priority', sortable: true, render: (r: WorkOrder) => {
-    const colors: Record<string, string> = { critical: 'text-red-fail', expedite: 'text-amber-ops', routine: 'text-text-muted' }
-    return <span className={`text-[10px] uppercase font-mono ${colors[r.priority] ?? ''}`}>{r.priority}</span>
-  }},
-  { key: 'status', header: 'Status', sortable: true, render: (r: WorkOrder) => <StatusBadge label={r.status.replace('_', ' ').toUpperCase()} variant={statusMap[r.status] ?? 'in_progress'} pulse={r.status === 'in_progress'} /> },
-  { key: 'dueDate', header: 'Due', sortable: true, render: (r: WorkOrder) => <span className="text-xs font-mono text-text-muted">{r.dueDate}</span> },
+  {
+    key: 'woNumber',
+    header: 'WO #',
+    sortable: true,
+    render: (r: WorkOrder) => <span className="font-mono text-xs text-blue-400">{r.woNumber}</span>,
+  },
+  {
+    key: 'assignedOperator',
+    header: 'Operator',
+    sortable: true,
+    render: (r: WorkOrder) => <span className="text-xs text-text-muted">{r.assignedOperator}</span>,
+  },
+  {
+    key: 'quantity',
+    header: 'Qty',
+    sortable: true,
+    render: (r: WorkOrder) => (
+      <span className="font-mono text-xs">
+        {r.quantityCompleted}/{r.quantity}
+      </span>
+    ),
+  },
+  {
+    key: 'priority',
+    header: 'Priority',
+    sortable: true,
+    render: (r: WorkOrder) => {
+      const colors: Record<string, string> = {
+        critical: 'text-red-fail',
+        expedite: 'text-amber-ops',
+        routine: 'text-text-muted',
+      }
+      return (
+        <span className={`text-[10px] uppercase font-mono ${colors[r.priority] ?? ''}`}>
+          {r.priority}
+        </span>
+      )
+    },
+  },
+  {
+    key: 'status',
+    header: 'Status',
+    sortable: true,
+    render: (r: WorkOrder) => (
+      <StatusBadge
+        label={r.status.replace('_', ' ').toUpperCase()}
+        variant={statusMap[r.status] ?? 'in_progress'}
+        pulse={r.status === 'in_progress'}
+      />
+    ),
+  },
+  {
+    key: 'dueDate',
+    header: 'Due',
+    sortable: true,
+    render: (r: WorkOrder) => (
+      <span className="text-xs font-mono text-text-muted">{r.dueDate}</span>
+    ),
+  },
 ]
 
 const ShopFloorPage: React.FC = () => {
-  const { selectedWO, selectWO, updateStep } = useMfgStore()
-  const addNCR = useQualityStore((s) => s.addNCR)
+  const { selectedWO, selectWO, updateStep, setWorkOrders } = useMfgStore()
+  const { addNCR } = useQualityStore()
   const [telemetry, setTelemetry] = useState<TelemetryReading>({
     facilityId: 'FAC-BLR-01',
     particleCount05um: 2850,
@@ -44,8 +94,14 @@ const ShopFloorPage: React.FC = () => {
   })
 
   useEffect(() => {
+    setWorkOrders(workOrders)
+  }, [setWorkOrders])
+
+  useEffect(() => {
     if (typeof Worker !== 'undefined') {
-      const worker = new Worker(new URL('@/simulation/telemetryWorker.ts', import.meta.url), { type: 'module' })
+      const worker = new Worker(new URL('@/simulation/telemetryWorker.ts', import.meta.url), {
+        type: 'module',
+      })
       worker.onmessage = (e) => {
         if (e.data.type === 'TELEMETRY_TICK') {
           setTelemetry(e.data.payload)
@@ -55,6 +111,19 @@ const ShopFloorPage: React.FC = () => {
       return () => worker.terminate()
     }
   }, [])
+
+  const handleCompleteStep = () => {
+    if (!selectedWO) return
+    const nextStep = selectedWO.steps.find(
+      (s) => s.status === 'pending' || s.status === 'in_progress',
+    )
+    if (!nextStep) return
+    updateStep(selectedWO.id, nextStep.stepNumber, {
+      status: 'completed',
+      completedBy: selectedWO.assignedOperator,
+      completedAt: new Date().toISOString(),
+    })
+  }
 
   const handleTorqueFail = () => {
     if (!selectedWO) return
@@ -77,7 +146,9 @@ const ShopFloorPage: React.FC = () => {
     <div className="space-y-6">
       <div>
         <h1 className="text-xl font-bold text-text-main">Shop Floor Execution Terminal</h1>
-        <p className="text-xs text-text-muted mt-1">Cleanroom AIT — ISO-8 Environment · Bengaluru Facility</p>
+        <p className="text-xs text-text-muted mt-1">
+          Cleanroom AIT — ISO-8 Environment · Bengaluru Facility
+        </p>
       </div>
 
       <PainPointBanner
@@ -87,9 +158,27 @@ const ShopFloorPage: React.FC = () => {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <TelemetryCard sensorName="ISO-8 Particle Count (0.5µm)" value={telemetry.particleCount05um} unit="p/m³" targetRange={[2600, 3520]} isCompliant={telemetry.particleCount05um < 3200} />
-        <TelemetryCard sensorName="Cleanroom Temperature" value={telemetry.temperatureC} unit="°C" targetRange={[19.5, 21.5]} isCompliant={telemetry.temperatureC >= 19.5 && telemetry.temperatureC <= 21.5} />
-        <TelemetryCard sensorName="Relative Humidity" value={telemetry.relativeHumidityPct} unit="%" targetRange={[40, 50]} isCompliant={telemetry.relativeHumidityPct >= 40 && telemetry.relativeHumidityPct <= 50} />
+        <TelemetryCard
+          sensorName="ISO-8 Particle Count (0.5µm)"
+          value={telemetry.particleCount05um}
+          unit="p/m³"
+          targetRange={[2600, 3520]}
+          isCompliant={telemetry.particleCount05um < 3200}
+        />
+        <TelemetryCard
+          sensorName="Cleanroom Temperature"
+          value={telemetry.temperatureC}
+          unit="°C"
+          targetRange={[19.5, 21.5]}
+          isCompliant={telemetry.temperatureC >= 19.5 && telemetry.temperatureC <= 21.5}
+        />
+        <TelemetryCard
+          sensorName="Relative Humidity"
+          value={telemetry.relativeHumidityPct}
+          unit="%"
+          targetRange={[40, 50]}
+          isCompliant={telemetry.relativeHumidityPct >= 40 && telemetry.relativeHumidityPct <= 50}
+        />
       </div>
 
       <div className="card-gradient p-4 space-y-3">
@@ -98,7 +187,7 @@ const ShopFloorPage: React.FC = () => {
           Active Work Orders — Cleanroom Line A
         </h2>
         <EnterpriseDataTable
-          data={workOrders.filter(wo => wo.status === 'in_progress' || wo.status === 'released')}
+          data={workOrders.filter((wo) => wo.status === 'in_progress' || wo.status === 'released')}
           columns={woColumns}
           onRowClick={(row) => selectWO(row)}
           pageSize={8}
@@ -119,7 +208,9 @@ const ShopFloorPage: React.FC = () => {
                 variant={statusMap[selectedWO.status] ?? 'in_progress'}
                 pulse={selectedWO.status === 'in_progress'}
               />
-              <span className="text-xs text-text-muted font-mono">{selectedWO.quantityCompleted}/{selectedWO.quantity} completed</span>
+              <span className="text-xs text-text-muted font-mono">
+                {selectedWO.quantityCompleted}/{selectedWO.quantity} completed
+              </span>
             </div>
             <div className="space-y-2" data-tour="torque-input">
               {selectedWO.steps.map((step) => (
@@ -127,24 +218,34 @@ const ShopFloorPage: React.FC = () => {
                   key={step.stepNumber}
                   layout
                   className={`p-3 rounded-lg border transition-all ${
-                    step.status === 'completed' ? 'border-emerald-500/20 bg-emerald-500/5' :
-                    step.status === 'failed' ? 'border-red-500/30 bg-red-500/10' :
-                    step.status === 'in_progress' ? 'border-blue-500/30 bg-blue-500/5' :
-                    'border-border-subtle bg-slate-900/30'
+                    step.status === 'completed'
+                      ? 'border-emerald-500/20 bg-emerald-500/5'
+                      : step.status === 'failed'
+                        ? 'border-red-500/30 bg-red-500/10'
+                        : step.status === 'in_progress'
+                          ? 'border-blue-500/30 bg-blue-500/5'
+                          : 'border-border-subtle bg-slate-900/30'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-2">
-                      {step.status === 'completed' ? <CheckCircle className="w-4 h-4 text-emerald-pass mt-0.5" /> :
-                       step.status === 'failed' ? <AlertTriangle className="w-4 h-4 text-red-fail mt-0.5" /> :
-                       <div className={`w-4 h-4 rounded-full border-2 mt-0.5 ${step.status === 'in_progress' ? 'border-blue-400 border-t-transparent animate-spin' : 'border-slate-700'}`} />}
+                      {step.status === 'completed' ? (
+                        <CheckCircle className="w-4 h-4 text-emerald-pass mt-0.5" />
+                      ) : step.status === 'failed' ? (
+                        <AlertTriangle className="w-4 h-4 text-red-fail mt-0.5" />
+                      ) : (
+                        <div
+                          className={`w-4 h-4 rounded-full border-2 mt-0.5 ${step.status === 'in_progress' ? 'border-blue-400 border-t-transparent animate-spin' : 'border-slate-700'}`}
+                        />
+                      )}
                       <div>
                         <p className="text-xs font-medium text-text-main">
                           Step {step.stepNumber}: {step.name}
                         </p>
                         {step.torqueTarget && (
                           <p className="text-[10px] font-mono text-text-muted mt-0.5">
-                            Torque: {step.torqueActual?.toFixed(2) ?? '—'} / {step.torqueTarget} {step.torqueUnit}
+                            Torque: {step.torqueActual?.toFixed(2) ?? '—'} / {step.torqueTarget}{' '}
+                            {step.torqueUnit}
                             {step.torqueActual && step.torqueActual > step.torqueTarget * 1.1 && (
                               <span className="text-red-fail ml-1">OUT OF SPEC</span>
                             )}
@@ -152,14 +253,25 @@ const ShopFloorPage: React.FC = () => {
                         )}
                         {step.completedBy && (
                           <p className="text-[10px] text-text-muted mt-0.5">
-                            ✓ {step.completedBy} {step.completedAt ? new Date(step.completedAt).toLocaleDateString() : ''}
+                            ✓ {step.completedBy}{' '}
+                            {step.completedAt
+                              ? new Date(step.completedAt).toLocaleDateString()
+                              : ''}
                           </p>
                         )}
                       </div>
                     </div>
                     <StatusBadge
                       label={step.status.replace('_', ' ').toUpperCase()}
-                      variant={step.status === 'completed' ? 'completed' : step.status === 'failed' ? 'failed' : step.status === 'in_progress' ? 'in_progress' : 'hold'}
+                      variant={
+                        step.status === 'completed'
+                          ? 'completed'
+                          : step.status === 'failed'
+                            ? 'failed'
+                            : step.status === 'in_progress'
+                              ? 'in_progress'
+                              : 'hold'
+                      }
                       pulse={step.status === 'in_progress'}
                     />
                   </div>
@@ -168,7 +280,15 @@ const ShopFloorPage: React.FC = () => {
             </div>
 
             <div className="flex gap-2 pt-2">
-              <button className="flex-1 px-3 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-xs font-medium text-emerald-pass hover:bg-emerald-500/20 transition-all">
+              <button
+                onClick={handleCompleteStep}
+                disabled={
+                  !selectedWO?.steps.some(
+                    (s) => s.status === 'pending' || s.status === 'in_progress',
+                  )
+                }
+                className="flex-1 px-3 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-xs font-medium text-emerald-pass hover:bg-emerald-500/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              >
                 Complete Next Step
               </button>
               <button

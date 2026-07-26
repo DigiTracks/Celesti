@@ -1,19 +1,26 @@
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --color-bg-base: #0B0F19;
+  --color-bg-base: #0b0f19;
   --color-bg-surface: #111827;
   --color-bg-glass: rgba(17, 24, 39, 0.75);
-  --color-border-subtle: #1F2937;
-  --color-border-accent: #3B82F6;
-  --color-text-main: #F9FAFB;
-  --color-text-muted: #9CA3AF;
-  --color-amber-ops: #F59E0B;
-  --color-emerald-pass: #10B981;
-  --color-red-fail: #EF4444;
-  --color-cyan-clean: #06B6D4;
+  --color-border-subtle: #1f2937;
+  --color-border-accent: #3b82f6;
+  --color-text-main: #f9fafb;
+  --color-text-muted: #9ca3af;
+  --color-amber-ops: #f59e0b;
+  --color-emerald-pass: #10b981;
+  --color-red-fail: #ef4444;
+  --color-cyan-clean: #06b6d4;
   --space-touch-target: 56px;
   --space-gap-md: 1rem;
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -30,11 +37,18 @@
 @layer base {
   * {
     scrollbar-width: thin;
-    scrollbar-color: #1F2937 transparent;
+    scrollbar-color: #1f2937 transparent;
   }
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 3px; }
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 3px;
+  }
 }
 
 @layer components {
@@ -56,4 +70,23 @@
   .border-glow {
     box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
   }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes unspin {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.sat-orbit {
+  animation: spin var(--speed) linear infinite;
+  transform-origin: center;
+}
+.sat-orbit > div {
+  animation: unspin var(--speed) linear infinite;
 }

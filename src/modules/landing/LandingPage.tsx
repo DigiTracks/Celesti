@@ -1,7 +1,21 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, Shield, AlertTriangle, CheckCircle, BarChart3, Globe, Package, BookText, Factory, ClipboardCheck, Truck, Network, Search } from 'lucide-react'
+import {
+  ArrowRight,
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+  BarChart3,
+  Globe,
+  Package,
+  BookText,
+  Factory,
+  ClipboardCheck,
+  Truck,
+  Network,
+  Search,
+} from 'lucide-react'
 import KPICard from '@/components/common/KPICard'
 import Logo from '@/components/common/Logo'
 import { facilities } from '@/json/facilities'
@@ -22,19 +36,128 @@ const LandingPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         className="text-center space-y-4 pt-6"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-400 font-medium mb-2">
-          <Shield className="w-3.5 h-3.5" />
-          Digi Tracks — AS9100D & ITAR Compliant Demo
-        </div>
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <Logo variant="full" className="h-12" animated />
+        <div className="flex items-center justify-center mb-4" style={{ minHeight: '200px' }}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="relative flex items-center justify-center"
+            style={{ width: '300px', height: '200px' }}
+          >
+            {/* Orbit rings */}
+            <div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{ perspective: '800px' }}
+            >
+              <div
+                className="w-[260px] h-[160px] rounded-full border border-blue-500/10"
+                style={{ transform: 'rotateX(75deg)' }}
+              />
+            </div>
+            <div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{ perspective: '800px' }}
+            >
+              <div
+                className="w-[200px] h-[120px] rounded-full border border-blue-500/5"
+                style={{ transform: 'rotateX(75deg)' }}
+              />
+            </div>
+            {/* Satellites */}
+            <div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{ perspective: '800px' }}
+            >
+              <div
+                className="relative"
+                style={{
+                  width: 0,
+                  height: 0,
+                  transform: 'rotateX(75deg)',
+                  transformStyle: 'preserve-3d',
+                }}
+              >
+                <div
+                  style={{
+                    animation: 'spin 5s linear infinite',
+                    transformOrigin: '0 0',
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                  }}
+                >
+                  <div
+                    className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 shadow-lg shadow-blue-500/40"
+                    style={{ transform: 'translateX(115px) translateY(-50%)' }}
+                  />
+                </div>
+                <div
+                  style={{
+                    animation: 'spin 7s linear infinite reverse',
+                    transformOrigin: '0 0',
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                  }}
+                >
+                  <div
+                    className="w-2 h-2 rounded-full bg-cyan-400/70 shadow-lg shadow-cyan-400/30"
+                    style={{ transform: 'translateX(-100px) translateY(-50%)' }}
+                  />
+                </div>
+                <div
+                  style={{
+                    animation: 'spin 9s linear infinite',
+                    transformOrigin: '0 0',
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                  }}
+                >
+                  <div
+                    className="w-3 h-3 rounded-full bg-gradient-to-br from-blue-500/40 to-cyan-400/40 border border-blue-400/30 shadow-lg"
+                    style={{ transform: 'translateX(135px) translateY(-50%)' }}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* Brandmark C */}
+            <motion.div
+              animate={{ rotate: [0, 5, 0, -5, 0], scale: [1, 1.05, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/20 z-10"
+            >
+              <span className="text-white font-bold text-lg">C</span>
+            </motion.div>
+            {/* Celesti text */}
+            <div className="z-10 ml-3">
+              <motion.h1
+                animate={{
+                  textShadow: [
+                    '0 0 20px rgba(59,130,246,0)',
+                    '0 0 30px rgba(59,130,246,0.3)',
+                    '0 0 20px rgba(59,130,246,0)',
+                  ],
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="text-3xl font-bold text-white tracking-tight"
+              >
+                Celesti
+                <span className="text-3xl font-light text-blue-500">.</span>
+              </motion.h1>
+            </div>
+          </motion.div>
         </div>
         <p className="text-base text-text-muted max-w-3xl mx-auto leading-relaxed">
-          Real-time manufacturing visibility across 3 centers of excellence — 450+ active work orders, 
-          1,200 controlled parts, AS9100D quality enforcement, and full back-to-birth supply chain traceability.
+          Real-time manufacturing visibility across 3 centers of excellence — 450+ active work
+          orders, 1,200 controlled parts, AS9100D quality enforcement, and full back-to-birth supply
+          chain traceability.
         </p>
         <div className="flex items-center justify-center gap-2 text-xs text-text-muted">
-          <span>Global search across all data — click <span className="text-blue-400">🔍</span> in header</span>
+          <span>
+            Global search across all data — click <span className="text-blue-400">🔍</span> in
+            header
+          </span>
         </div>
       </motion.div>
 
@@ -51,22 +174,73 @@ const LandingPage: React.FC = () => {
         </h2>
         <div className="grid md:grid-cols-2 gap-3">
           {[
-            { icon: Globe, pain: 'Fragmented Operational Visibility', detail: '3 facilities operate independently — no single-pane-of-glass for executives. Reports take 2-3 days to compile manually.', impact: '+48hr decision latency', severity: 'critical' },
-            { icon: ClipboardCheck, pain: 'Paper-Based AS9100D Compliance', detail: 'NCRs logged on paper travelers. Average 72-hour response time to non-conformances. MRB reviews backlogged by 2 weeks.', impact: '72hr response lag', severity: 'critical' },
-            { icon: Truck, pain: 'Slow Supply Chain Traceability', detail: 'Averaging 8 days to trace a flight fastener back to its Mill Test Report. Manual cross-reference of 3 separate systems required.', impact: '8 day trace time', severity: 'major' },
-            { icon: Network, pain: 'PLM/MES Configuration Drift', detail: 'Engineering BOM and Manufacturing BOM diverge at 12% per program. 1 in 8 assemblies uses wrong revision part.', impact: '12% discrepancy', severity: 'major' },
-            { icon: Factory, pain: 'No Real-Time Cleanroom Monitoring', detail: 'ISO-8 particle counts logged manually twice per shift. Environmental excursions detected hours after occurrence.', impact: 'Hours to detect', severity: 'major' },
-            { icon: Shield, pain: 'ITAR/EAR Data Exposure Risk', detail: 'Cloud-based tools not approved for defense data. Spreadsheets emailed across facilities violate data handling policies.', impact: 'Compliance risk', severity: 'critical' },
+            {
+              icon: Globe,
+              pain: 'Fragmented Operational Visibility',
+              detail:
+                '3 facilities operate independently — no single-pane-of-glass for executives. Reports take 2-3 days to compile manually.',
+              impact: '+48hr decision latency',
+              severity: 'critical',
+            },
+            {
+              icon: ClipboardCheck,
+              pain: 'Paper-Based AS9100D Compliance',
+              detail:
+                'NCRs logged on paper travelers. Average 72-hour response time to non-conformances. MRB reviews backlogged by 2 weeks.',
+              impact: '72hr response lag',
+              severity: 'critical',
+            },
+            {
+              icon: Truck,
+              pain: 'Slow Supply Chain Traceability',
+              detail:
+                'Averaging 8 days to trace a flight fastener back to its Mill Test Report. Manual cross-reference of 3 separate systems required.',
+              impact: '8 day trace time',
+              severity: 'major',
+            },
+            {
+              icon: Network,
+              pain: 'PLM/MES Configuration Drift',
+              detail:
+                'Engineering BOM and Manufacturing BOM diverge at 12% per program. 1 in 8 assemblies uses wrong revision part.',
+              impact: '12% discrepancy',
+              severity: 'major',
+            },
+            {
+              icon: Factory,
+              pain: 'No Real-Time Cleanroom Monitoring',
+              detail:
+                'ISO-8 particle counts logged manually twice per shift. Environmental excursions detected hours after occurrence.',
+              impact: 'Hours to detect',
+              severity: 'major',
+            },
+            {
+              icon: Shield,
+              pain: 'ITAR/EAR Data Exposure Risk',
+              detail:
+                'Cloud-based tools not approved for defense data. Spreadsheets emailed across facilities violate data handling policies.',
+              impact: 'Compliance risk',
+              severity: 'critical',
+            },
           ].map((item) => (
-            <div key={item.pain} className="bg-slate-900/50 border border-red-500/10 rounded-xl p-4 space-y-1">
+            <div
+              key={item.pain}
+              className="bg-slate-900/50 border border-red-500/10 rounded-xl p-4 space-y-1"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2">
                   <item.icon className="w-4 h-4 text-red-fail" />
                   <h3 className="text-sm font-semibold text-text-main">{item.pain}</h3>
                 </div>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono ${
-                  item.severity === 'critical' ? 'bg-red-500/10 text-red-fail' : 'bg-amber-500/10 text-amber-ops'
-                }`}>{item.severity.toUpperCase()}</span>
+                <span
+                  className={`text-[10px] px-2 py-0.5 rounded-full font-mono ${
+                    item.severity === 'critical'
+                      ? 'bg-red-500/10 text-red-fail'
+                      : 'bg-amber-500/10 text-amber-ops'
+                  }`}
+                >
+                  {item.severity.toUpperCase()}
+                </span>
               </div>
               <p className="text-xs text-text-muted pl-6">{item.detail}</p>
               <div className="flex items-center gap-2 pl-6 pt-1">
@@ -91,12 +265,48 @@ const LandingPage: React.FC = () => {
         </h2>
         <div className="grid md:grid-cols-3 gap-4">
           {[
-            { icon: Globe, title: 'Unified Operations Dashboard', resolves: 'Fragmented Visibility', desc: 'Real-time OEE, FPY, throughput across all 3 facilities. Executive drill-down from program to work order in 3 clicks. No manual reporting.', route: '/executive' },
-            { icon: ClipboardCheck, title: 'Automated AS9100D Workflow', resolves: 'Paper Compliance', desc: 'NCR auto-created on torque failure (Clause 8.7). MRB disposition workflow. CAPA tracking with 90-day closure. Full audit trail.', route: '/quality' },
-            { icon: Truck, title: '3-Second Traceability', resolves: 'Slow Traceability', desc: 'Back-to-birth genealogy linking every serial to MTR, heat lot, AS9163 CoC. Full trace in &lt;3 seconds. Supplier AML with audit scores.', route: '/supply-chain' },
-            { icon: Network, title: 'Digital Thread Reconciliation', resolves: 'BOM Drift', desc: 'EbOM-to-MbOM side-by-side diff with real-time detection. ECO change propagation. Zero configuration drift between engineering and shop floor.', route: '/digital-thread' },
-            { icon: Factory, title: 'Live Cleanroom Telemetry', resolves: 'No Monitoring', desc: 'Real-time ISO-8 particle, temp, humidity via Web Worker. Automatic alert on excursion. 3-second update interval. Historical trend view.', route: '/shop-floor' },
-            { icon: Shield, title: '100% Offline & ITAR Safe', resolves: 'Data Exposure', desc: 'Zero external network calls. All data bundled in static build. Full functionality without internet. Data never leaves the browser. GitHub Pages deployed.', route: '/architecture' },
+            {
+              icon: Globe,
+              title: 'Unified Operations Dashboard',
+              resolves: 'Fragmented Visibility',
+              desc: 'Real-time OEE, FPY, throughput across all 3 facilities. Executive drill-down from program to work order in 3 clicks. No manual reporting.',
+              route: '/executive',
+            },
+            {
+              icon: ClipboardCheck,
+              title: 'Automated AS9100D Workflow',
+              resolves: 'Paper Compliance',
+              desc: 'NCR auto-created on torque failure (Clause 8.7). MRB disposition workflow. CAPA tracking with 90-day closure. Full audit trail.',
+              route: '/quality',
+            },
+            {
+              icon: Truck,
+              title: '3-Second Traceability',
+              resolves: 'Slow Traceability',
+              desc: 'Back-to-birth genealogy linking every serial to MTR, heat lot, AS9163 CoC. Full trace in &lt;3 seconds. Supplier AML with audit scores.',
+              route: '/supply-chain',
+            },
+            {
+              icon: Network,
+              title: 'Digital Thread Reconciliation',
+              resolves: 'BOM Drift',
+              desc: 'EbOM-to-MbOM side-by-side diff with real-time detection. ECO change propagation. Zero configuration drift between engineering and shop floor.',
+              route: '/digital-thread',
+            },
+            {
+              icon: Factory,
+              title: 'Live Cleanroom Telemetry',
+              resolves: 'No Monitoring',
+              desc: 'Real-time ISO-8 particle, temp, humidity via Web Worker. Automatic alert on excursion. 3-second update interval. Historical trend view.',
+              route: '/shop-floor',
+            },
+            {
+              icon: Shield,
+              title: '100% Offline & ITAR Safe',
+              resolves: 'Data Exposure',
+              desc: 'Zero external network calls. All data bundled in static build. Full functionality without internet. Data never leaves the browser. GitHub Pages deployed.',
+              route: '/architecture',
+            },
           ].map((item) => (
             <button
               key={item.title}
@@ -105,7 +315,9 @@ const LandingPage: React.FC = () => {
             >
               <div className="flex items-center justify-between">
                 <item.icon className="w-5 h-5 text-emerald-pass" />
-                <span className="text-[9px] text-text-muted font-mono opacity-0 group-hover:opacity-100 transition-opacity">Go →</span>
+                <span className="text-[9px] text-text-muted font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+                  Go →
+                </span>
               </div>
               <h3 className="text-sm font-semibold text-text-main">{item.title}</h3>
               <p className="text-[10px] text-amber-ops font-mono">Resolves: {item.resolves}</p>
@@ -123,23 +335,61 @@ const LandingPage: React.FC = () => {
         className="bg-blue-500/5 border border-blue-500/20 rounded-2xl p-5 text-center space-y-3"
       >
         <Search className="w-6 h-6 text-blue-400 mx-auto" />
-        <p className="text-sm text-text-main font-medium">Global Search — Indexed Across All Modules</p>
+        <p className="text-sm text-text-main font-medium">
+          Global Search — Indexed Across All Modules
+        </p>
         <p className="text-xs text-text-muted max-w-xl mx-auto">
-          Click the <span className="text-blue-400">🔍</span> icon in the header or press <kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">Ctrl+K</kbd> to instantly search 
-          1,200 parts, 450 work orders, 75 NCRs, 90 suppliers, 10 procedures, 3 facilities, and 20 programs — entirely local, no network.
+          Click the <span className="text-blue-400">🔍</span> icon in the header or press{' '}
+          <kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">Ctrl+K</kbd> to
+          instantly search 1,200 parts, 450 work orders, 75 NCRs, 90 suppliers, 10 procedures, 3
+          facilities, and 20 programs — entirely local, no network.
         </p>
       </motion.div>
 
       {/* KEY METRICS */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <KPICard title="Active Programs" value={activePrograms.length} status="pass" trend={{ value: 12, isPositive: true }} onClick={() => navigate('/executive')} />
-        <KPICard title="Budget Deployed" value={`$${(totalBudget / 1e6).toFixed(0)}M`} status="pass" />
+        <KPICard
+          title="Active Programs"
+          value={activePrograms.length}
+          status="pass"
+          trend={{ value: 12, isPositive: true }}
+          onClick={() => navigate('/executive')}
+        />
+        <KPICard
+          title="Budget Deployed"
+          value={`$${(totalBudget / 1e6).toFixed(0)}M`}
+          status="pass"
+        />
         <KPICard title="Total Workforce" value={totalEmployees.toLocaleString()} status="pass" />
         <KPICard title="Facilities" value={facilities.length} unit="sites" status="pass" />
-        <KPICard title="Parts Catalog" value={parts_catalog.length.toLocaleString()} unit="PNs" status="pass" onClick={() => navigate('/inventory')} />
-        <KPICard title="Avg First Pass Yield" value={facilities.reduce((s, f) => s + f.fpy, 0) / facilities.length} unit="%" status={facilities.every(f => f.fpy > 93) ? 'pass' : 'warning'} trend={{ value: 2.3, isPositive: true }} />
-        <KPICard title="Overall OEE" value={facilities.reduce((s, f) => s + f.oee, 0) / facilities.length} unit="%" status="pass" trend={{ value: 4.1, isPositive: true }} />
-        <KPICard title="Open NCRs" value="12" unit="active" status="warning" onClick={() => navigate('/quality')} />
+        <KPICard
+          title="Parts Catalog"
+          value={parts_catalog.length.toLocaleString()}
+          unit="PNs"
+          status="pass"
+          onClick={() => navigate('/inventory')}
+        />
+        <KPICard
+          title="Avg First Pass Yield"
+          value={facilities.reduce((s, f) => s + f.fpy, 0) / facilities.length}
+          unit="%"
+          status={facilities.every((f) => f.fpy > 93) ? 'pass' : 'warning'}
+          trend={{ value: 2.3, isPositive: true }}
+        />
+        <KPICard
+          title="Overall OEE"
+          value={facilities.reduce((s, f) => s + f.oee, 0) / facilities.length}
+          unit="%"
+          status="pass"
+          trend={{ value: 4.1, isPositive: true }}
+        />
+        <KPICard
+          title="Open NCRs"
+          value="12"
+          unit="active"
+          status="warning"
+          onClick={() => navigate('/quality')}
+        />
       </div>
 
       {/* FACILITY SNAPSHOT */}
@@ -159,17 +409,30 @@ const LandingPage: React.FC = () => {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-text-main">{fac.name.split(' ').slice(0, 2).join(' ')}</h3>
+                  <h3 className="font-semibold text-text-main">
+                    {fac.name.split(' ').slice(0, 2).join(' ')}
+                  </h3>
                   <p className="text-xs text-text-muted">{fac.location.split(',')[0]}</p>
                 </div>
-                <span className={`text-[10px] px-2 py-1 rounded-full font-mono ${fac.status === 'operational' ? 'bg-emerald-500/10 text-emerald-pass' : 'bg-amber-500/10 text-amber-ops'}`}>
+                <span
+                  className={`text-[10px] px-2 py-1 rounded-full font-mono ${fac.status === 'operational' ? 'bg-emerald-500/10 text-emerald-pass' : 'bg-amber-500/10 text-amber-ops'}`}
+                >
                   {fac.type.split(' ')[0]}
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-3 text-center">
-                <div><p className="text-lg font-bold font-mono text-text-main">{fac.oee}%</p><p className="text-[10px] text-text-muted">OEE</p></div>
-                <div><p className="text-lg font-bold font-mono text-text-main">{fac.fpy}%</p><p className="text-[10px] text-text-muted">FPY</p></div>
-                <div><p className="text-lg font-bold font-mono text-text-main">{fac.activeOrders}</p><p className="text-[10px] text-text-muted">Active WOs</p></div>
+                <div>
+                  <p className="text-lg font-bold font-mono text-text-main">{fac.oee}%</p>
+                  <p className="text-[10px] text-text-muted">OEE</p>
+                </div>
+                <div>
+                  <p className="text-lg font-bold font-mono text-text-main">{fac.fpy}%</p>
+                  <p className="text-[10px] text-text-muted">FPY</p>
+                </div>
+                <div>
+                  <p className="text-lg font-bold font-mono text-text-main">{fac.activeOrders}</p>
+                  <p className="text-[10px] text-text-muted">Active WOs</p>
+                </div>
               </div>
             </motion.div>
           ))}

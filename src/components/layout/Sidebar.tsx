@@ -17,11 +17,18 @@ import {
   Building2,
 } from 'lucide-react'
 import { useAppStore } from '@/stores/useAppStore'
-import Logo from '@/components/common/Logo'
+
+const roleLanding: Record<string, string> = {
+  CEO: '/',
+  MFG_ENGINEER: '/digital-thread',
+  QUALITY_INSPECTOR: '/quality',
+  TECHNICIAN: '/shop-floor',
+  SUPPLIER: '/supply-chain',
+  AUDITOR: '/executive',
+}
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Executive Vision', end: true },
-  { to: '/digi-tracks', icon: Building2, label: 'Digi Tracks' },
   { to: '/executive', icon: Globe, label: 'Mission Control' },
   { to: '/shop-floor', icon: Factory, label: 'Shop Floor' },
   { to: '/quality', icon: ClipboardCheck, label: 'Quality Center' },
@@ -42,6 +49,7 @@ interface SidebarInnerProps {
 
 const SidebarInner: React.FC<SidebarInnerProps> = ({ sidebarOpen, onNavClick, showClose }) => {
   const { toggleSidebar, setSidebarOpen, activePersona } = useAppStore()
+  const navigate = useNavigate()
   const filteredNav = navItems.filter((item) => activePersona.accessibleRoutes.includes(item.to))
   const navToShow = filteredNav.length > 0 ? filteredNav : navItems
 
@@ -49,15 +57,80 @@ const SidebarInner: React.FC<SidebarInnerProps> = ({ sidebarOpen, onNavClick, sh
     <div className="h-full bg-bg-surface border-r border-border-subtle flex flex-col overflow-hidden">
       <div className="h-14 flex items-center border-b border-border-subtle px-4 flex-shrink-0">
         {sidebarOpen ? (
-          <Logo variant="full" className="h-7" animated />
+          <div
+            className="relative flex items-center justify-center mx-auto"
+            style={{ width: '160px', height: '40px' }}
+          >
+            <div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{ perspective: '800px' }}
+            >
+              <div
+                className="w-[130px] h-[80px] rounded-full border border-blue-500/10"
+                style={{ transform: 'rotateX(75deg)' }}
+              />
+            </div>
+            <div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{ perspective: '800px' }}
+            >
+              <div
+                className="relative"
+                style={{
+                  width: 0,
+                  height: 0,
+                  transform: 'rotateX(75deg)',
+                  transformStyle: 'preserve-3d',
+                }}
+              >
+                <div
+                  style={{
+                    animation: 'spin 5s linear infinite',
+                    transformOrigin: '0 0',
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                  }}
+                >
+                  <div
+                    className="w-2 h-2 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 shadow-lg shadow-blue-500/40"
+                    style={{ transform: 'translateX(58px) translateY(-50%)' }}
+                  />
+                </div>
+              </div>
+            </div>
+            <motion.div
+              animate={{ rotate: [0, 5, 0, -5, 0], scale: [1, 1.05, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              className="flex items-center justify-center w-6 h-6 rounded-md bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/20 z-10"
+            >
+              <span className="text-white font-bold text-xs">C</span>
+            </motion.div>
+            <div className="z-10 ml-1.5">
+              <span className="text-base font-bold text-white tracking-tight">Celesti</span>
+              <span className="text-base font-light text-blue-500">.</span>
+            </div>
+          </div>
         ) : (
-          <Logo variant="icon" className="mx-auto" animated />
+          <motion.div
+            animate={{ rotate: [0, 5, 0, -5, 0], scale: [1, 1.05, 1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/20 mx-auto"
+          >
+            <span className="text-white font-bold text-sm">C</span>
+          </motion.div>
         )}
         <button
           onClick={showClose ? () => setSidebarOpen(false) : toggleSidebar}
           className={`p-1 rounded-lg hover:bg-slate-800 transition-colors text-text-muted hover:text-text-main ${sidebarOpen ? 'ml-auto' : 'absolute right-1'}`}
         >
-          {showClose ? <X className="w-4 h-4" /> : <ChevronLeft className={`w-4 h-4 transition-transform ${!sidebarOpen ? 'rotate-180' : ''}`} />}
+          {showClose ? (
+            <X className="w-4 h-4" />
+          ) : (
+            <ChevronLeft
+              className={`w-4 h-4 transition-transform ${!sidebarOpen ? 'rotate-180' : ''}`}
+            />
+          )}
         </button>
       </div>
 
@@ -91,11 +164,36 @@ const SidebarInner: React.FC<SidebarInnerProps> = ({ sidebarOpen, onNavClick, sh
         ))}
       </nav>
 
+      {/* Digi Tracks — marketing section */}
+      <div className="border-t border-border-subtle pt-2 pb-1 px-4 flex-shrink-0">
+        <button
+          onClick={() => {
+            navigate('/digi-tracks')
+            onNavClick?.()
+          }}
+          className="flex items-center gap-3 px-2 py-2 rounded-lg transition-all text-sm text-text-muted hover:text-text-main hover:bg-slate-800/30 w-full text-left"
+        >
+          <Building2 className="w-4 h-4 flex-shrink-0" />
+          {sidebarOpen && (
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-[10px] font-mono tracking-wider uppercase text-text-muted/60"
+            >
+              Digi Tracks
+            </motion.span>
+          )}
+        </button>
+      </div>
+
       <div className="p-3 border-t border-border-subtle flex-shrink-0">
         {sidebarOpen ? (
           <div className="text-center">
             <p className="text-[10px] text-text-muted font-mono">Celesti v2.0</p>
-            <p className="text-[8px] text-text-muted/60 font-mono tracking-wider uppercase">AS9100D · ITAR · Offline</p>
+            <p className="text-[8px] text-text-muted/60 font-mono tracking-wider uppercase">
+              AS9100D · ITAR · Offline
+            </p>
           </div>
         ) : (
           <p className="text-[10px] text-text-muted text-center font-mono">C</p>
@@ -109,14 +207,14 @@ const Sidebar: React.FC = () => {
   const { sidebarOpen, activePersona } = useAppStore()
   const location = useLocation()
   const navigate = useNavigate()
-  const currentBlocked = !activePersona.accessibleRoutes.includes(location.pathname) && location.pathname !== '/'
+  const currentBlocked =
+    !activePersona.accessibleRoutes.includes(location.pathname) && location.pathname !== '/'
 
   React.useEffect(() => {
     if (currentBlocked) {
-      const fallback = activePersona.accessibleRoutes[1] || '/'
-      navigate(fallback, { replace: true })
+      navigate(roleLanding[activePersona.role] || '/', { replace: true })
     }
-  }, [currentBlocked, activePersona.accessibleRoutes, navigate])
+  }, [currentBlocked, activePersona.role, navigate])
 
   return (
     <>
@@ -141,9 +239,17 @@ const Sidebar: React.FC = () => {
             transition={{ type: 'spring', damping: 25, stiffness: 250 }}
             className="fixed inset-0 z-[9997] md:hidden"
           >
-            <button className="absolute inset-0 bg-black/60" aria-label="Close sidebar" onClick={() => useAppStore.getState().setSidebarOpen(false)} />
+            <button
+              className="absolute inset-0 bg-black/60"
+              aria-label="Close sidebar"
+              onClick={() => useAppStore.getState().setSidebarOpen(false)}
+            />
             <motion.div className="relative w-72 h-full">
-              <SidebarInner sidebarOpen={true} onNavClick={() => useAppStore.getState().setSidebarOpen(false)} showClose />
+              <SidebarInner
+                sidebarOpen={true}
+                onNavClick={() => useAppStore.getState().setSidebarOpen(false)}
+                showClose
+              />
             </motion.div>
           </motion.aside>
         )}

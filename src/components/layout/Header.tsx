@@ -33,6 +33,9 @@ const Header: React.FC = () => {
           <span className="font-mono hidden sm:inline text-[10px]">
             {offline ? 'EDGE CACHE' : 'LIVE'}
           </span>
+          <span className="font-mono hidden md:inline text-[9px] text-text-muted/60 ml-1">
+            AS9100D & ITAR Compliant Demo
+          </span>
         </div>
       </div>
 
