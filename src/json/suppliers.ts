@@ -1,0 +1,36 @@
+import type { Supplier } from '@/types'
+
+export const suppliers: Supplier[] = [
+  { id: 'SUP-001', name: 'AeroAlloys Precision Components', tier: 1, as9100Certified: true, auditScore: 98, amlStatus: 'approved', partsSupplied: ['RF-001','RF-002','ST-001','ST-002'], location: 'Bengaluru, India' },
+  { id: 'SUP-002', name: 'Semicon Systems India Pvt Ltd', tier: 1, as9100Certified: true, auditScore: 96, amlStatus: 'approved', partsSupplied: ['IC-001','IC-002','IC-003','IC-004'], location: 'Hyderabad, India' },
+  { id: 'SUP-003', name: 'MechTech Aerospace Fasteners', tier: 2, as9100Certified: true, auditScore: 92, amlStatus: 'approved', partsSupplied: ['FT-001','FT-002','FT-003','FT-004','FT-005'], location: 'Pune, India' },
+  { id: 'SUP-004', name: 'OptiLens Technologies', tier: 1, as9100Certified: true, auditScore: 94, amlStatus: 'approved', partsSupplied: ['OP-001','OP-002'], location: 'Chennai, India' },
+  { id: 'SUP-005', name: 'CableTech Wiring Solutions', tier: 2, as9100Certified: true, auditScore: 89, amlStatus: 'approved', partsSupplied: ['HR-001','HR-002','HR-003'], location: 'Mumbai, India' },
+  { id: 'SUP-006', name: 'RF Microwave Components Ltd', tier: 1, as9100Certified: true, auditScore: 97, amlStatus: 'approved', partsSupplied: ['RF-003','RF-004','RF-005'], location: 'Bengaluru, India' },
+  { id: 'SUP-007', name: 'Structura Aerospace Fabrication', tier: 2, as9100Certified: true, auditScore: 91, amlStatus: 'approved', partsSupplied: ['ST-003','ST-004','ST-005'], location: 'Coimbatore, India' },
+  { id: 'SUP-008', name: 'NanoFab IC Foundry', tier: 1, as9100Certified: true, auditScore: 99, amlStatus: 'approved', partsSupplied: ['IC-005','IC-006','IC-007'], location: 'Singapore' },
+  { id: 'SUP-009', name: 'HarnessPro Interconnect Systems', tier: 2, as9100Certified: false, auditScore: 84, amlStatus: 'conditional', partsSupplied: ['HR-004','HR-005'], location: 'Gurugram, India' },
+  { id: 'SUP-010', name: 'Titanium Forge Aerospace', tier: 1, as9100Certified: true, auditScore: 95, amlStatus: 'approved', partsSupplied: ['ST-006','ST-007','ST-008'], location: 'Mysuru, India' },
+  { id: 'SUP-011', name: 'MicroConn Electronics', tier: 2, as9100Certified: true, auditScore: 88, amlStatus: 'approved', partsSupplied: ['IC-008','IC-009'], location: 'Noida, India' },
+  { id: 'SUP-012', name: 'Delta RF Systems', tier: 1, as9100Certified: true, auditScore: 93, amlStatus: 'approved', partsSupplied: ['RF-006','RF-007','RF-008'], location: 'Hyderabad, India' },
+  { id: 'SUP-013', name: 'Precision Optical Components Inc', tier: 1, as9100Certified: true, auditScore: 97, amlStatus: 'approved', partsSupplied: ['OP-003','OP-004'], location: 'Tokyo, Japan' },
+  { id: 'SUP-014', name: 'FastenerTech Global', tier: 3, as9100Certified: false, auditScore: 76, amlStatus: 'suspended', partsSupplied: ['FT-006'], location: 'Guangzhou, China' },
+  { id: 'SUP-015', name: 'AeroHarness Defense Cabling', tier: 2, as9100Certified: true, auditScore: 90, amlStatus: 'approved', partsSupplied: ['HR-006','HR-007','HR-008'], location: 'Bengaluru, India' },
+  { id: 'SUP-016', name: 'SpaceGrade Alloys Europe', tier: 1, as9100Certified: true, auditScore: 100, amlStatus: 'approved', partsSupplied: ['ST-009','ST-010'], location: 'Munich, Germany' },
+  { id: 'SUP-017', name: 'QualChip Semiconductor', tier: 2, as9100Certified: true, auditScore: 87, amlStatus: 'conditional', partsSupplied: ['IC-010','IC-011','IC-012'], location: 'Penang, Malaysia' },
+  { id: 'SUP-018', name: 'RF Core Technologies', tier: 1, as9100Certified: true, auditScore: 96, amlStatus: 'approved', partsSupplied: ['RF-009','RF-010'], location: 'Bengaluru, India' },
+  { id: 'SUP-019', name: 'ThermoFab Aerospace Insulation', tier: 2, as9100Certified: true, auditScore: 85, amlStatus: 'approved', partsSupplied: ['ST-011','ST-012'], location: 'Vadodara, India' },
+  { id: 'SUP-020', name: 'LaserTech Precision Cutting', tier: 3, as9100Certified: false, auditScore: 78, amlStatus: 'conditional', partsSupplied: ['ST-013','FT-007'], location: 'Jaipur, India' },
+  { id: 'SUP-021', name: 'Galactic IC Solutions', tier: 1, as9100Certified: true, auditScore: 95, amlStatus: 'approved', partsSupplied: ['IC-013','IC-014','IC-015'], location: 'Hsinchu, Taiwan' },
+  { id: 'SUP-022', name: 'Advanced Cable Assembly Inc', tier: 2, as9100Certified: true, auditScore: 91, amlStatus: 'approved', partsSupplied: ['HR-009','HR-010'], location: 'Bengaluru, India' },
+  { id: 'SUP-023', name: 'Optica Precision Ltd', tier: 1, as9100Certified: true, auditScore: 98, amlStatus: 'approved', partsSupplied: ['OP-005','OP-006'], location: 'Jena, Germany' },
+  { id: 'SUP-024', name: 'StrucWell Engineering', tier: 2, as9100Certified: true, auditScore: 86, amlStatus: 'approved', partsSupplied: ['ST-014','ST-015'], location: 'Ahmedabad, India' },
+  { id: 'SUP-025', name: 'Micro RF Devices', tier: 3, as9100Certified: false, auditScore: 72, amlStatus: 'suspended', partsSupplied: ['RF-011'], location: 'Shenzhen, China' },
+  { id: 'SUP-026', name: 'Aerospace Bolt & Nut Co', tier: 2, as9100Certified: true, auditScore: 90, amlStatus: 'approved', partsSupplied: ['FT-008','FT-009','FT-010'], location: 'Ludhiana, India' },
+  { id: 'SUP-027', name: 'Kavach RF Shielding Systems', tier: 1, as9100Certified: true, auditScore: 93, amlStatus: 'approved', partsSupplied: ['RF-012','RF-013'], location: 'Hyderabad, India' },
+  { id: 'SUP-028', name: 'ECM Harness Engineering', tier: 2, as9100Certified: true, auditScore: 88, amlStatus: 'approved', partsSupplied: ['HR-011','HR-012'], location: 'Chennai, India' },
+  { id: 'SUP-029', name: 'PhotonChip Technologies', tier: 1, as9100Certified: true, auditScore: 97, amlStatus: 'approved', partsSupplied: ['OP-007','OP-008','IC-016'], location: 'Eindhoven, Netherlands' },
+  { id: 'SUP-030', name: 'Indra Aerospace Fasteners', tier: 3, as9100Certified: false, auditScore: 74, amlStatus: 'conditional', partsSupplied: ['FT-011','FT-012'], location: 'Faridabad, India' },
+]
+
+export default suppliers

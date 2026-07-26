@@ -1,0 +1,39 @@
+export interface ArchNode {
+  id: string
+  label: string
+  type: 'system' | 'subsystem' | 'integration' | 'dataflow'
+  status: 'active' | 'degraded' | 'inactive'
+  layer: 'presentation' | 'application' | 'data' | 'infrastructure'
+  parentId?: string
+  description: string
+}
+
+export const architectureNodes: ArchNode[] = [
+  { id: 'ARC-01', label: 'Celesti EDMP Platform', type: 'system', status: 'active', layer: 'presentation', description: 'Enterprise Digital Platform — single pane of glass' },
+  { id: 'ARC-02', label: 'Executive MCD Dashboard', type: 'subsystem', status: 'active', layer: 'presentation', parentId: 'ARC-01', description: 'Executive Mission Control Dashboard' },
+  { id: 'ARC-03', label: 'Shop Floor Execution System', type: 'subsystem', status: 'active', layer: 'presentation', parentId: 'ARC-01', description: 'Cleanroom AIT execution terminal' },
+  { id: 'ARC-04', label: 'Quality Management Center', type: 'subsystem', status: 'active', layer: 'presentation', parentId: 'ARC-01', description: 'AS9100D Non-Conformance & CAPA Center' },
+  { id: 'ARC-05', label: 'Digital Thread Explorer', type: 'subsystem', status: 'active', layer: 'presentation', parentId: 'ARC-01', description: 'EbOM/MbOM diff & PLM integration viewer' },
+  { id: 'ARC-06', label: 'Supply Chain Genealogy', type: 'subsystem', status: 'active', layer: 'presentation', parentId: 'ARC-01', description: 'Back-to-birth traceability with CoC validation' },
+  { id: 'ARC-07', label: 'Analytics & SPC Engine', type: 'subsystem', status: 'active', layer: 'presentation', parentId: 'ARC-01', description: 'Statistical process control & manufacturing analytics' },
+  { id: 'ARC-08', label: 'Architecture Explorer', type: 'subsystem', status: 'active', layer: 'presentation', parentId: 'ARC-01', description: 'Interactive platform architecture visualization' },
+  { id: 'ARC-09', label: 'AI Copilot Interface', type: 'subsystem', status: 'active', layer: 'presentation', parentId: 'ARC-01', description: 'Simulated RAG-based manufacturing assistant' },
+  { id: 'ARC-10', label: 'PLM Integration Gateway', type: 'integration', status: 'active', layer: 'application', parentId: 'ARC-01', description: 'Real-time PLM data sync via REST/SOAP bridge' },
+  { id: 'ARC-11', label: 'MES Core Engine', type: 'system', status: 'active', layer: 'application', description: 'Manufacturing Execution System — order dispatch, routing, tracking' },
+  { id: 'ARC-12', label: 'e-Traveler Manager', type: 'subsystem', status: 'active', layer: 'application', parentId: 'ARC-11', description: 'Digital work instruction & traveler execution' },
+  { id: 'ARC-13', label: 'Tool & Equipment Integration', type: 'subsystem', status: 'active', layer: 'application', parentId: 'ARC-11', description: 'Smart torque tool, CMM, and test equipment data acquisition' },
+  { id: 'ARC-14', label: 'Material Track & Trace', type: 'subsystem', status: 'active', layer: 'application', parentId: 'ARC-11', description: 'Lot/batch/serial genealogy tracking engine' },
+  { id: 'ARC-15', label: 'QMS Core — AS9100D Engine', type: 'system', status: 'active', layer: 'application', description: 'Quality Management System with compliance enforcement' },
+  { id: 'ARC-16', label: 'NCR & CAPA Workflow', type: 'subsystem', status: 'degraded', layer: 'application', parentId: 'ARC-15', description: 'Non-conformance & corrective action lifecycle (MRB pending items)' },
+  { id: 'ARC-17', label: 'Audit & Compliance Manager', type: 'subsystem', status: 'active', layer: 'application', parentId: 'ARC-15', description: 'AS9100D internal audit scheduling & findings tracking' },
+  { id: 'ARC-18', label: 'ERP Integration Layer', type: 'integration', status: 'active', layer: 'application', description: 'SAP/Oracle ERP integration for BOM, inventory, PO sync' },
+  { id: 'ARC-19', label: 'Data Lake & Historian', type: 'system', status: 'active', layer: 'data', description: 'Time-series data lake for telemetry, SPC, and genealogy' },
+  { id: 'ARC-20', label: 'Telemetry Stream Processor', type: 'subsystem', status: 'active', layer: 'data', parentId: 'ARC-19', description: 'Real-time cleanroom & tool sensor data ingestion' },
+  { id: 'ARC-21', label: 'SPC Analytics Warehouse', type: 'subsystem', status: 'active', layer: 'data', parentId: 'ARC-19', description: 'Statistical process control data mart with control limits' },
+  { id: 'ARC-22', label: 'Document & CoC Repository', type: 'subsystem', status: 'active', layer: 'data', parentId: 'ARC-19', description: 'MTR, CoC, traveler, and work instruction document store' },
+  { id: 'ARC-23', label: 'Edge Compute Cluster', type: 'system', status: 'active', layer: 'infrastructure', description: 'On-premise edge compute for cleanroom low-latency processing' },
+  { id: 'ARC-24', label: 'IoT Gateway Mesh', type: 'subsystem', status: 'active', layer: 'infrastructure', parentId: 'ARC-23', description: 'OPC-UA/MQTT gateway for tool & sensor connectivity' },
+  { id: 'ARC-25', label: 'Secure Data Fabric', type: 'subsystem', status: 'active', layer: 'infrastructure', parentId: 'ARC-23', description: 'Encrypted data bus for ITAR/EAR controlled data flow' },
+]
+
+export default architectureNodes

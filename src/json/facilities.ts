@@ -1,0 +1,40 @@
+import type { Facility } from '@/types'
+
+export const facilities: Facility[] = [
+  {
+    id: 'FAC-HYD-01',
+    name: 'Hyderabad Center of Excellence',
+    location: 'Hyderabad, Telangana, India',
+    type: 'Cleanroom ISO-8',
+    status: 'operational',
+    oee: 87.3,
+    fpy: 94.1,
+    activeOrders: 187,
+    employeeCount: 1240,
+    sqft: 185000,
+  },
+  {
+    id: 'FAC-BLR-01',
+    name: 'Bengaluru AIT Integration Facility',
+    location: 'Bengaluru, Karnataka, India',
+    type: 'AIT Integration',
+    status: 'operational',
+    oee: 91.8,
+    fpy: 96.5,
+    activeOrders: 143,
+    employeeCount: 980,
+    sqft: 220000,
+  },
+  {
+    id: 'FAC-TRV-01',
+    name: 'Thiruvananthapuram Testing & Validation',
+    location: 'Thiruvananthapuram, Kerala, India',
+    type: 'Testing & Validation',
+    status: 'operational',
+    oee: 79.6,
+    fpy: 92.3,
+    activeOrders: 120,
+    employeeCount: 560,
+    sqft: 95000,
+  },
+]
