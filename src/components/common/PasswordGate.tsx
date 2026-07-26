@@ -10,7 +10,7 @@ const PasswordGate: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const correct = import.meta.env.VITE_APP_PASSWORD || 'celesti'
+    const correct = import.meta.env.VITE_APP_PASSWORD || 'earth@123'
     if (value === correct) {
       onUnlock()
     } else {
